@@ -147,3 +147,5 @@ button:disabled{filter:grayscale(.4);opacity:.5}
 .role b{font-family:Fraunces,Georgia,serif}
 .card{box-shadow:0 1px 0 rgba(0,0,0,.02),0 8px 22px rgba(30,30,20,.04)}
 .pin{background-image:linear-gradient(180deg,rgba(255,255,255,.28),rgba(0,0,0,.12))}
+.vesileima{position:absolute;inset:0;pointer-events:none;background-repeat:repeat;background-size:300px 150px}
+.vl-palkki{position:absolute;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);color:#fff;font-size:12px;font-weight:600;padding:5px 10px;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}

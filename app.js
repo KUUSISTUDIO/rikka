@@ -354,10 +354,29 @@ function vKohde() {
 function kuvaAlue(t, num, edit) {
   const u = url(t.kuva_polku);
   const pins = t.pisteet.map(p => `<div class="pin" data-pid="${p.id}" style="left:${(p.x * 100).toFixed(2)}%;top:${(p.y * 100).toFixed(2)}%;background:${p.id === 'uusi' ? PIN.oletus : pinVari(p.id)}">${p.id === 'uusi' ? '+' : num[p.id]}</div>`).join('');
-  if (u) return `<div class="photo${edit ? ' edit' : ''}" id="photo"><img src="${esc(u)}" alt="">${pins}</div>`;
+  if (u) return `<div class="photo${edit ? ' edit' : ''}" id="photo"><img src="${esc(u)}" alt="">${es() ? '' : vesileima()}${pins}</div>`;
   const syy = t.kuva_polku ? 'Kuvaa ei voitu ladata' : S.b.k.kuvat_poistettu ? 'Kuva poistettu säilytysajan päätyttyä' : S.b.k.kuvakaytanto === 'ei' ? 'Pohja (ei kuvia)' : 'Ei kuvaa';
   return `<div class="photo${edit ? ' edit' : ''}" id="photo"><div class="pohja"><span class="lbl">${esc(syy)}</span></div>${pins}</div>`;
 }
+/* henkilökohtainen vesileima siivoojan näkymään: katsojan nimi ja aika */
+function vesileimaTeksti() {
+  const d = new Date();
+  return `${S.prof.nimi || S.user.email} · ${d.toLocaleDateString('fi-FI')} ${d.toLocaleTimeString('fi-FI', {hour:'2-digit', minute:'2-digit'})}`;
+}
+function vesileimaTausta(t) {
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='300' height='150'><text x='150' y='80' text-anchor='middle' transform='rotate(-22 150 75)' font-family='Helvetica,Arial,sans-serif' font-size='15' font-weight='700' fill='rgba(255,255,255,0.42)' stroke='rgba(0,0,0,0.22)' stroke-width='0.6'>${esc(t)}</text></svg>`;
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+}
+function vesileima() {
+  const t = vesileimaTeksti();
+  return `<div class="vesileima" style="background-image:${esc(vesileimaTausta(t))}"></div><div class="vl-palkki">${esc(t)} · Luottamuksellinen</div>`;
+}
+setInterval(() => {
+  const v = document.querySelector('.vesileima'), b = document.querySelector('.vl-palkki');
+  if (!v || !S.prof) return;
+  const t = vesileimaTeksti(); v.style.backgroundImage = vesileimaTausta(t); b.textContent = t + ' · Luottamuksellinen';
+}, 30000);
+
 function vTila() {
   const v = view(), t = S.b.tilat.find(x => x.id === v.tid), num = numerot();
   let h = topbar(t.nimi) + '<div class="wrap">';
