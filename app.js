@@ -231,9 +231,10 @@ function vahvista(teksti, ok, vaarallinen, lisa) {
 /* ---------- näkymät ---------- */
 function topbar(title, right) {
   const b = S.stack.length > 1 ? '<button class="back" data-act="back" aria-label="Takaisin">‹</button>' : '';
-  return `<div class="top"><div class="in">${b}<h1>${esc(title)}</h1>${right || ''}</div></div>`;
+  const m = S.stack.length > 1 ? '' : '<img class="mark" src="logo.svg" alt="">';
+  return `<div class="top"><div class="in">${b}${m}<h1>${esc(title)}</h1>${right || ''}</div></div>`;
 }
-const footer = () => '<div class="foot">Rikka · Hideaway Group Oy · www.hideawaygroup.fi</div>';
+const footer = () => '<div class="foot"><img class="mark" src="logo.svg" alt="">Rikka · Hideaway Group Oy · www.hideawaygroup.fi</div>';
 
 function render() {
   const app = $('#app'), v = view();
@@ -246,7 +247,7 @@ function render() {
 }
 
 function vKirjaudu() {
-  return `<div class="auth"><div class="logo">Rikka<span>.</span></div><p class="muted">Siivouskohteiden kartoitus, tarjousraportti ja siivousten kuittaus.</p>
+  return `<div class="auth"><div class="brandrow"><img class="mark" src="logo.svg" alt=""><span class="brand">Rikka<i>.</i></span></div><p class="muted" style="margin-top:14px">Siivouskohteiden kartoitus, tarjousraportti ja siivousten kuittaus.</p>
   <form id="fLogin" class="card" autocomplete="on"><h2>Kirjaudu</h2>
   <label for="lEmail">Sähköposti</label><input id="lEmail" type="email" autocomplete="username" required>
   <label for="lPw">Salasana</label><input id="lPw" type="password" autocomplete="current-password" required>
